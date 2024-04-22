@@ -1,6 +1,10 @@
 <?php 
-
   session_start();
+  if (!isset($_SESSION['usuario'])) {
+    // Voltar pro login:
+    header("Location: index.php");
+    die();
+}
 
   if($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_once('./classes/Produto.class.php');
@@ -8,16 +12,16 @@
     $p = new Produto();
 
     $p->nome = strip_tags($_POST['nome']);
-    
     $p->descricao = strip_tags($_POST['descricao']);
     $p->categoria_fk = strip_tags($_POST['categoria']);
     $p->estoque = strip_tags($_POST['estoque']);
     $p->preco = strip_tags($_POST['preco']);
-    $p->usuario_fk = strip_tags($_POST['usuario']);
+    $p->usuario_fk = $_SESSION['usuario']['id'];
 
-    $target_file = $target_dir . basename($_FILES["foto"]["name"]);
+    
+    $ext = pathinfo($_FILES['foto']['nome'], PATHINFO_EXTENSION);
     $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+   
 
     // Verificar se a imagem é real ou fake
     if(isset($_POST["submit"])) {
@@ -30,12 +34,7 @@
         $uploadOk = 0;
       }
     }
-
-    // Verificar se o arquivo ja existe no servidor
-    if (file_exists($target_file)) {
-      echo "Este arquivo ja existe.";
-      $uploadOk = 0;
-    }
+  
 
     // Verificar o tamanho do arquivo
     if ($_FILES["foto"]["size"] > 500000) {
@@ -44,33 +43,40 @@
     }
 
     // Permitir certo tipos de arquivos
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-    && $imageFileType != "gif" ) {
+    if($ext != "jpg" && $ext != "png" && $ext != "jpeg"
+    && $ext != "gif" ) {
       echo "Apenas arquivos JPG, JPEG, PNG & GIF são permitidos.";
       $uploadOk = 0;
     }
 
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
-      echo "Desculpe, seu arquivo não foi enviado.";
+      if($p->CadastrarsImg() == 1) {
+        header("Location: ../painel.php");
+        die();
+
+      } else {
+        echo "<script>alert('erro')</script>";
+      };
     // if everything is ok, try to upload file
     } else {
-      if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
+      $target_dir = "../imagens/";
         
-        $p->foto = ($_POST['foto']);
-       
-      } else {
-        echo "Desculpe, ocorreu um erro ao enviar o seu arquivo.";
-      }
+        $novo_nome = hash_file('md5', $_FILES['foto']['tmp_name']). "." .$ext;
+        $p->foto = $novo_nome;
+      if (move_uploaded_file($_FILES["foto"]["tmp_name"], $novo_nome)) {
+        
+        if($p->Cadastrar() == 1) {
+          header("Location: ../painel.php");
+        } else {
+          echo "<script>alert('erro')</script>";
+        }
+      } 
     }
 
 
 
-    if($p->Cadastrar() == 1) {
-      header("Location: ../painel.php");
-    } else {
-      echo "<script>alert('erro')</script>";
-    }
+    
     
   } else {
     echo "Essa página deve ser carregada por post!";

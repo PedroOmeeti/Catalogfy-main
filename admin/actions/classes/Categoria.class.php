@@ -25,10 +25,10 @@
       $conexao = Banco::conectar();
       $comando = $conexao->prepare($sql);
       $comando->execute();
-      $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
+      $linhas = $comando->fetchAll(PDO::FETCH_ASSOC);
 
       Banco::desconectar();
-      return $resultado;
+      return $linhas;
 
 
     }

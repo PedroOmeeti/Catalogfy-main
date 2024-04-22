@@ -7,11 +7,15 @@ if (!isset($_SESSION['usuario'])) {
     die();
 }
 require_once('./actions/classes/Categoria.class.php');
+require_once('./actions/classes/Produto.class.php');
 
     $user = $_SESSION['usuario']['id'];
 
     $resultado = new Categoria();
     $listcategoria = $resultado->Listar();
+
+    $resultadoprodutos = new Produto();
+    $listproduto = $resultadoprodutos->ListarTudo();
 
 
 
@@ -57,13 +61,15 @@ require_once('./actions/classes/Categoria.class.php');
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td><img src="https://via.placeholder.com/150x150.png" alt="Produto 1"></td>
-                    <td>Produto 1</td>
-                    <td>Descrição do Produto 1</td>
-                    <td>Categoria 1</td>
-                    <td>10</td>
-                    <td>R$ 100,00</td>
+                <?php foreach($listproduto as $listgeral) { ?>
+                    <td><?=$listgeral['id']; ?></td>
+                    <td><img src="./imagens/<?=$listgeral['foto']; ?>" alt="Produto 1"></td>
+                    <td><?=$listgeral['nome']; ?></td>
+                    <td><?=$listgeral['descricao']; ?></td>
+                    <td><?=$listgeral['nomecategoria']; ?></td>
+                    <td><?=$listgeral['estoque']; ?></td>
+                    <td>R$ <?=$listgeral['preco']; ?></td>
+                <?php } ?>
                 </tr>
                 <tr>
                     <td>2</td>
@@ -85,6 +91,7 @@ require_once('./actions/classes/Categoria.class.php');
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+                    
                     <h5 class="modal-title" id="modalCadastroLabel">Cadastro de Produto</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                         <span aria-hidden="true">&times;</span>
@@ -93,7 +100,7 @@ require_once('./actions/classes/Categoria.class.php');
                 <div class="modal-body">
                     
                         <div class="form-group">
-                            <input type="hidden" name="usuario" value="<?=$user;?>">
+                            
                             <label for="nomeProduto">Nome</label>
                             <input type="text" class="form-control" id="nomeProduto" placeholder="Digite o nome do produto" name="nome">
                         </div>
@@ -140,6 +147,7 @@ require_once('./actions/classes/Categoria.class.php');
             </div>
         </div>
     </div>
+    </form>
     <div class="modal fade" id="modalAddCategoria" tabindex="-1" role="dialog" aria-labelledby="modalAddCategoriaLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
@@ -161,12 +169,13 @@ require_once('./actions/classes/Categoria.class.php');
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                         <button type="submit" class="btn btn-primary">Adicionar</button>
+                        
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</form>
+
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>

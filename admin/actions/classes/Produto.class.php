@@ -13,7 +13,7 @@
     public $usuario_fk;
 
     public function Cadastrar() {
-      $sql = "INSERT INTO produtos (nome, descricao, categoria_fk, estoque, preco, foto, usuario_fk) VALUE (?,?,?,?,?,?,?)";
+      $sql = "INSERT INTO produtos (nome, descricao, id_categoria, estoque, preco, foto, id_resp) VALUE (?,?,?,?,?,?,?)";
       $conexao = Banco::conectar();
       $comando = $conexao->prepare($sql);
 
@@ -23,6 +23,32 @@
       Banco::desconectar();
       return($linhas);
       
+    }
+
+    public function CadastrarsImg() {
+      $sql = "INSERT INTO produtos (nome, descricao, id_categoria, estoque, preco, id_resp) VALUE (?,?,?,?,?,?)";
+      $conexao = Banco::conectar();
+      $comando = $conexao->prepare($sql);
+
+      $comando->execute([$this->nome, $this->descricao, $this->categoria_fk, $this->estoque, $this->preco, $this->usuario_fk]);
+      $linhas = $comando->rowCount();
+
+      Banco::desconectar();
+      return($linhas);
+
+    }
+
+    public function ListarTudo() {
+      $sql = "SELECT * FROM produtos_completo";
+      $conexao = Banco::conectar();
+      $comando = $conexao->prepare($sql);
+
+      $comando->execute();
+      $linhas = $comando->fetchAll(PDO::FETCH_ASSOC);
+
+      Banco::desconectar();
+      return($linhas);
+
     }
 
   }
