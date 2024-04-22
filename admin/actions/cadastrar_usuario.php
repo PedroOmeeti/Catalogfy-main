@@ -16,7 +16,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         echo "Falha ao cadastrar usuario";
     }
 }else{
-    echo "Essa página dever ser carregada por post!";
+    echo "Essa página deve ser carregada por post!";
 }
 
 ?>

@@ -6,11 +6,13 @@ if (!isset($_SESSION['usuario'])) {
     header("Location: index.php");
     die();
 }
-
 require_once('./actions/classes/Categoria.class.php');
 
+    $user = $_SESSION['usuario']['id'];
+
     $resultado = new Categoria();
-     $listcategoria = $resultado->Listar();
+    $listcategoria = $resultado->Listar();
+
 
 
 
@@ -78,6 +80,7 @@ require_once('./actions/classes/Categoria.class.php');
     </div>
 
     <!-- Modal de Cadastro -->
+    <form action="./actions/cadastrar_produto.php" method="POST" enctype="multipart/form-data">
     <div class="modal fade" id="modalCadastro" tabindex="-1" role="dialog" aria-labelledby="modalCadastroLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -88,22 +91,23 @@ require_once('./actions/classes/Categoria.class.php');
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    
                         <div class="form-group">
+                            <input type="hidden" name="usuario" value="<?=$user;?>">
                             <label for="nomeProduto">Nome</label>
-                            <input type="text" class="form-control" id="nomeProduto" placeholder="Digite o nome do produto">
+                            <input type="text" class="form-control" id="nomeProduto" placeholder="Digite o nome do produto" name="nome">
                         </div>
                         <div class="form-group">
                             <label for="fotoProduto">Foto</label>
-                            <input type="file" class="form-control-file" id="fotoProduto">
+                            <input type="file" class="form-control-file" id="fotoProduto" name="foto">
                         </div>
                         <div class="form-group">
                             <label for="descricaoProduto">Descrição</label>
-                            <textarea class="form-control" id="descricaoProduto" rows="3"></textarea>
-                        </div>
+                            <textarea class="form-control" id="descricaoProduto" rows="3" name="descricao"></textarea>
+                        </div> 
                         <div class="form-group">
                             <label for="categoriaProduto">Categoria</label>
-                            <select class="form-control" id="categoriaProduto">
+                            <select class="form-control" id="categoriaProduto" name="categoria">
                                <?php foreach($listcategoria as $categoria) { ?> 
                                 <option value="<?=$categoria['id']; ?>"><?=$categoria['nome'];?></option>
                                <?php } ?> 
@@ -116,7 +120,7 @@ require_once('./actions/classes/Categoria.class.php');
                         </div>
                         <div class="form-group">
                             <label for="estoqueProduto">Estoque</label>
-                            <input type="number" class="form-control" id="estoqueProduto" placeholder="Digite a quantidade em estoque">
+                            <input type="number" class="form-control" id="estoqueProduto" placeholder="Digite a quantidade em estoque" name="estoque">
                         </div>
                         <div class="form-group">
                             <label for="precoProduto">Preço</label>
@@ -124,14 +128,14 @@ require_once('./actions/classes/Categoria.class.php');
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">R$</span>
                                 </div>
-                                <input type="number" class="form-control" id="precoProduto" placeholder="Digite o preço">
+                                <input type="number" class="form-control" id="precoProduto" placeholder="Digite o preço" name="preco">
                             </div>
                         </div>
-                    </form>
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary">Salvar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
         </div>
@@ -162,6 +166,7 @@ require_once('./actions/classes/Categoria.class.php');
             </div>
         </div>
     </div>
+</form>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
