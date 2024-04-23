@@ -60,17 +60,17 @@ require_once('./actions/classes/Produto.class.php');
                 </tr>
             </thead>
             <tbody>
-                <tr>
                 <?php foreach($listproduto as $listgeral) { ?>
+                <tr>
                     <td><?=$listgeral['id']; ?></td>
-                    <td><img src="./imagens/<?=$listgeral['foto']; ?>" alt="Produto 1"></td>
+                    <td><img src="./imagens/<?=$listgeral['foto']; ?> " width="150px" height="150px"></td>
                     <td><?=$listgeral['nome']; ?></td>
                     <td><?=$listgeral['descricao']; ?></td>
                     <td><?=$listgeral['nomecategoria']; ?></td>
                     <td><?=$listgeral['estoque']; ?></td>
                     <td>R$ <?=$listgeral['preco']; ?></td>
-                <?php } ?>
                 </tr>
+                <?php } ?>
                 <tr>
                     <td>2</td>
                     <td><img src="https://via.placeholder.com/150x150.png" alt="Produto 2"></td>

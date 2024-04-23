@@ -19,7 +19,7 @@
     $p->usuario_fk = $_SESSION['usuario']['id'];
 
     
-    $ext = pathinfo($_FILES['foto']['nome'], PATHINFO_EXTENSION);
+    $ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
     $uploadOk = 1;
    
 
@@ -60,11 +60,11 @@
       };
     // if everything is ok, try to upload file
     } else {
-      $target_dir = "../imagens/";
+      $target_dir = "./imagens/";
         
         $novo_nome = hash_file('md5', $_FILES['foto']['tmp_name']). "." .$ext;
         $p->foto = $novo_nome;
-      if (move_uploaded_file($_FILES["foto"]["tmp_name"], $novo_nome)) {
+        if (move_uploaded_file($_FILES["foto"]["tmp_name"], $novo_nome)) {
         
         if($p->Cadastrar() == 1) {
           header("Location: ../painel.php");
@@ -73,9 +73,6 @@
         }
       } 
     }
-
-
-
     
     
   } else {
