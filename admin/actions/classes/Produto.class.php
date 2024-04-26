@@ -51,6 +51,65 @@
 
     }
 
+    public function Deletar() {
+      $sql = "DELETE FROM produtos WHERE id = ?";
+      $conexao = Banco::conectar();
+      // Converter o comando sql (string) em um objeto
+      $comando = $conexao->prepare($sql);
+  
+      // Executar o comando
+      $comando->execute([$this->id]);
+      $linhas = $comando->rowCount();
+      // Desconectar
+      Banco::desconectar();
+      // Retornar a quantidade de linhas cadastradas
+      return $linhas;
+  
+    }
+
+    public function Modificar() {
+      $sql = "UPDATE produtos SET nome=?, descricao=?, id_categoria=?, estoque=?, preco=?, foto=?  WHERE id=?";
+      $conexao = Banco::conectar();
+      // Converter o comando sql (string) em um objeto
+      $comando = $conexao->prepare($sql);
+  
+      // Executar o comando
+      $comando->execute([$this->nome, $this->descricao, $this->categoria_fk, $this->estoque, $this->preco, $this->foto, $this->id]);
+      $linhas = $comando->rowCount();
+      // Desconectar
+      Banco::desconectar();
+      // Retornar a quantidade de linhas cadastradas
+      return $linhas;
+    }
+
+    public function Modificarsemimagem() {
+      $sql = "UPDATE produtos SET nome=?, descricao=?, id_categoria=? estoque=?, preco=? WHERE id=?";
+      $conexao = Banco::conectar();
+      // Converter o comando sql (string) em um objeto
+      $comando = $conexao->prepare($sql);
+  
+      // Executar o comando
+      $comando->execute([$this->nome, $this->descricao, $this->categoria_fk, $this->estoque, $this->preco, $this->id]);
+      $linhas = $comando->rowCount();
+      // Desconectar
+      Banco::desconectar();
+      // Retornar a quantidade de linhas cadastradas
+      return $linhas;
+    }
+
+    public function ListarFoto() {
+      $sql = "SELECT foto FROM produtos WHERE id = ?";
+      $conexao = Banco::conectar();
+      $comando = $conexao->prepare($sql);
+
+      $comando->execute([$this->id]);
+      $linhas = $comando->fetchAll(PDO::FETCH_ASSOC);
+
+      Banco::desconectar();
+      return($linhas);
+
+    }
+
   }
 
 

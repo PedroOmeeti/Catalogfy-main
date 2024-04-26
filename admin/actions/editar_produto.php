@@ -50,7 +50,7 @@
 
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
-      if($p->CadastrarsImg() == 1) {
+      if($p->Modificarsemimagem() == 1) {
         $p->foto = "semfoto.jpg";
         header("Location: ../painel.php");
         die();
@@ -66,7 +66,7 @@
         $p->foto = $novo_nome;
         if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_dir . $novo_nome)) {
         
-        if($p->Cadastrar() == 1) {
+        if($p->Modificar() == 1) {
           header("Location: ../painel.php");
           die();
         } else {
