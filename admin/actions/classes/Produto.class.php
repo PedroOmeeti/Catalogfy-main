@@ -83,7 +83,7 @@
     }
 
     public function Modificarsemimagem() {
-      $sql = "UPDATE produtos SET nome=?, descricao=?, id_categoria=? estoque=?, preco=? WHERE id=?";
+      $sql = "UPDATE produtos SET nome=?, descricao=?, id_categoria=?, estoque=?, preco=? WHERE id=?";
       $conexao = Banco::conectar();
       // Converter o comando sql (string) em um objeto
       $comando = $conexao->prepare($sql);

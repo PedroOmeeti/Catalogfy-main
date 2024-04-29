@@ -11,17 +11,19 @@
 
     $p = new Produto();
 
+    $p->id = strip_tags($_POST['id']);
+  
+    $antigo = $p->ListarFoto()[0]['foto'];
+    
     $p->nome = strip_tags($_POST['nome']);
     $p->descricao = strip_tags($_POST['descricao']);
     $p->categoria_fk = strip_tags($_POST['categoria']);
     $p->estoque = strip_tags($_POST['estoque']);
     $p->preco = strip_tags($_POST['preco']);
     $p->usuario_fk = $_SESSION['usuario']['id'];
-
     
     $ext = pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION);
-    $uploadOk = 1;
-   
+    $uploadOk = 1;   
 
     // Verificar se a imagem é real ou fake
     if(isset($_POST["submit"])) {
@@ -43,15 +45,19 @@
     }
 
     // Permitir certo tipos de arquivos
-    if($ext != "jpg" && $ext != "png" && $ext != "jpeg") {
+    if(empty($_FILES['foto']['name'])) {
+      $uploadOk = 0;
+     } elseif($ext != "jpg" && $ext != "png" && $ext != "jpeg") {
       echo "Apenas arquivos JPG, JPEG, PNG & GIF são permitidos.";
       $uploadOk = 0;
     }
 
+    // print_r($uploadOk);
+    // die();
+
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
       if($p->Modificarsemimagem() == 1) {
-        $p->foto = "semfoto.jpg";
         header("Location: ../painel.php");
         die();
 
@@ -67,6 +73,9 @@
         if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_dir . $novo_nome)) {
         
         if($p->Modificar() == 1) {
+          if($antigo != 'semfoto.jpg') {
+            unlink('../imagens/' . $antigo);
+          }
           header("Location: ../painel.php");
           die();
         } else {

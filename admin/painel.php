@@ -72,7 +72,7 @@ require_once('./actions/classes/Produto.class.php');
                     <td><?=$listgeral['nomecategoria']; ?></td>
                     <td><?=$listgeral['estoque']; ?></td>
                     <td>R$ <?=$listgeral['preco']; ?></td>
-                    <td><button type="button" class="btn btn-primary mx-1" data-toggle="modal" data-target="#modalEditar" data-nome="<?=$listgeral['nome']; ?>" data-foto="<?=$listgeral['foto']; ?>" data-descricao="<?=$listgeral['descricao']; ?>" data-categoria="<?=$listgeral['nomecategoria']; ?>" data-estoque="<?=$listgeral['estoque']; ?>" data-preco="<?=$listgeral['preco']; ?>"> Editar Produto</button><br><br><a class="btn btn-danger" href="./actions/excluir_produto.php?id=<?=$listgeral['id']; ?>">Excluir Produto</td>
+                    <td><button type="button" class="btn btn-primary mx-1 text-white" data-toggle="modal" data-target="#modalEditar" data-nome="<?=$listgeral['nome']; ?>" data-foto="<?=$listgeral['foto']; ?>" data-descricao="<?=$listgeral['descricao']; ?>" data-categoria="<?=$listgeral['nomecategoria']; ?>" data-estoque="<?=$listgeral['estoque']; ?>" data-preco="<?=$listgeral['preco']; ?>" data-id="<?=$listgeral['id']; ?>">Editar Produto </button>  <br><br> <a class="btn btn-danger" href="./actions/excluir_produto.php?id=<?=$listgeral['id']; ?>">Excluir Produto</td>
                     <!-- <i class="bi bi-plus-circle"></i> -->
                 </tr>
                 <?php } ?>
@@ -225,6 +225,7 @@ require_once('./actions/classes/Produto.class.php');
                                     <span class="input-group-text">R$</span>
                                 </div>
                                 <input type="number" class="form-control precoProduto" id="precoProduto" placeholder="Digite o preço" name="preco">
+                                <input type="hidden" value="" class="idProduto" id="idProduto" name="id">
                             </div>
                         </div>
                     
@@ -251,6 +252,7 @@ require_once('./actions/classes/Produto.class.php');
             var categoria = button.data('categoria')
             var estoque = button.data('estoque')
             var preco = button.data('preco')
+            var id = button.data('id')
             var modal = $(this)
             modal.find('.nomeProduto').val(nome)
             modal.find('.fotoProduto').attr('src','imagens/'+foto)
@@ -258,6 +260,7 @@ require_once('./actions/classes/Produto.class.php');
             modal.find('.categoriaProduto').val(categoria)
             modal.find('.estoqueProduto').val(estoque)
             modal.find('.precoProduto').val(preco)
+            modal.find('.idProduto').val(id)
         })
     </script>
 </body>
