@@ -45,7 +45,7 @@
     }
 
     // Permitir certo tipos de arquivos
-    if(empty($_FILES['foto']['name'])) {
+    if(empty($_FILES['foto']['size'])) {
       $uploadOk = 0;
      } elseif($ext != "jpg" && $ext != "png" && $ext != "jpeg") {
       echo "Apenas arquivos JPG, JPEG, PNG & GIF são permitidos.";
