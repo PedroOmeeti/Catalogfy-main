@@ -9,9 +9,13 @@
   session_write_close();
   setcookie(session_name(),'',0,'/');
   session_regenerate_id(true);
+
+  $ultimo = $_SERVER['HTTP_REFERER'];
   // Redirecionar pro index.php (página do usuário):
-  header("Location: index.php");
+  header("Location: $ultimo");
   die();
+
+  
 
 
 

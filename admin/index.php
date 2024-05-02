@@ -109,6 +109,8 @@
             $("#titulo").text('Login');
         });
     </script>
+    <!-- Importar o sweetalert -->
+        <?php include_once('includes/alertas.include.php'); ?>
 </body>
 
 </html>

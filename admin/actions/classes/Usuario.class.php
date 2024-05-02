@@ -31,11 +31,17 @@
      
       // Obter o hash sha256 da senha:
       $hash = hash("sha256", $this->senha);
-      $comando->execute([$this->nome, $this->email, $hash]);
-      $linhas = $comando->rowCount();
+      try {
+        $comando->execute([$this->nome, $this->email, $hash]);
+        $linhas = $comando->rowCount();
+  
+        Banco::desconectar();
+        return $linhas;
 
-      Banco::desconectar();
-      return $linhas;
+      } catch(PDOException $e) {
+        Banco::desconectar();
+        return 0;
+      }
     }
   }
 

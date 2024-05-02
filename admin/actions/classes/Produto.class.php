@@ -110,6 +110,19 @@
 
     }
 
+    public function ListarInfos() {
+      $sql = "SELECT * FROM produtos_completo WHERE id = ?";
+      $conexao = Banco::conectar();
+      $comando = $conexao->prepare($sql);
+
+      $comando->execute([$this->id]);
+      $linhas = $comando->fetchAll(PDO::FETCH_ASSOC);
+
+      Banco::desconectar();
+      return($linhas);
+
+    }
+
   }
 
 

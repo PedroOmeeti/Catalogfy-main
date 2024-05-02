@@ -1,6 +1,14 @@
 <?php
 // Página com detalhes do produtos selecionado.
 // ex: produto.php?id=25
+  session_start();
+
+  require_once('./admin/actions/classes/Produto.class.php');
+  $resultadoprodutos = new Produto();
+
+  $resultadoprodutos->id = strip_tags($_GET['id']);
+  $listproduto = $resultadoprodutos->ListarInfos()[0];
+
 
 ?>
 
@@ -20,18 +28,9 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #00a;">
-    <a class="navbar-brand" href="#">Detalhes do Produto</a>
-    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-        aria-expanded="false" aria-label="Toggle navigation"></button>
-    <div class="collapse navbar-collapse" id="collapsibleNavId">
-        <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-                <a class="nav-link active" href="#" aria-current="page">Início <span class="visually-hidden">(current)</span></a>
-            </li>
-        </ul>
-    </div>
-</nav> 
+  <?php 
+    include_once('cabecalho.php');
+  ?>
 
 <div class="container">
     <div class="row mt-3">
@@ -42,12 +41,12 @@
     <!-- Detalhes do Produto selecionado: -->
     <div class="row mt-5">
         <div class="col-7">
-            <img class="rounded mx-auto d-block" src="https://i.imgur.com/cnC3irP.jpg"/>
+            <img class="rounded mx-auto d-block" src="admin/imagens/<?=$listproduto['foto']; ?>"/>
         </div>
         <div class="col-5">
-            <h2>Titulo do Produto</h2>
-            <p>Descrição do produto</p>
-            <h1 class="display-6">$9,99</h1>
+            <h2><?=$listproduto['nome']; ?></h2>
+            <p><?=$listproduto['descricao']; ?></p>
+            <h1 class="display-6">R$ <?=$listproduto['preco']; ?></h1>
             <a href="index.php"><small class="text-muted">Voltar</small></a>
         </div>
     </div>

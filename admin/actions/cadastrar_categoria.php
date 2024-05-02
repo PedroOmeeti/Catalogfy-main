@@ -9,9 +9,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if($u->Cadastrar() == 1){
         // Deu certo heheheh
         // Redirecionar de volta ao login:
-        header("Location: ../painel.php");
+        header("Location: ../painel.php?sucesso=categoriaok");
     }else{
-        echo "Falha ao cadastrar categoria";
+        header('Location: ../painek.php?erro=categoriafalha');;
     }
 }else{
     echo "Essa página dever ser carregada por post!";

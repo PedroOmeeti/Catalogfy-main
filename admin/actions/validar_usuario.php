@@ -13,10 +13,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         session_start();
         $_SESSION['usuario'] = $resultado[0];
         // Redirecionar pro index.php (página do usuário):
-        header("Location: ../painel.php");
+        header("Location: ../../");
         die();
     }else{
-        echo "Usuário ou senha incorretos";
+       header('Location: ../index.php?erro=loginfalha');
     }
 
 }else{

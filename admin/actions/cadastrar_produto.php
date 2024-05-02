@@ -44,7 +44,7 @@
 
     // Permitir certo tipos de arquivos
     if($ext != "jpg" && $ext != "png" && $ext != "jpeg") {
-      echo "Apenas arquivos JPG, JPEG, PNG & GIF são permitidos.";
+      echo "Apenas arquivos JPG, JPEG, webp, PNG & GIF são permitidos.";
       $uploadOk = 0;
     }
 
@@ -66,15 +66,16 @@
         $p->foto = $novo_nome;
         if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_dir . $novo_nome)) {
         
-        if($p->Cadastrar() == 1) {
-          header("Location: ../painel.php");
-          die();
+          if($p->Cadastrar() == 1) {
+            header("Location: ../painel.php?sucesso=produtook");
+            die();
+          } else {
+            header("Location: ../painel.php?erro=produtofalha");
+          }
+
         } else {
-          echo "<script>alert('erro')</script>";
+          header("Location: ../painel.php?erro=produtofalhafoto");
         }
-      } else {
-        echo "Falha ao cadastrar produto(foto)";
-      }
     }
     
     

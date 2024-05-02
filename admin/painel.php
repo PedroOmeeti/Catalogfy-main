@@ -72,7 +72,7 @@ require_once('./actions/classes/Produto.class.php');
                     <td><?=$listgeral['nomecategoria']; ?></td>
                     <td><?=$listgeral['estoque']; ?></td>
                     <td>R$ <?=$listgeral['preco']; ?></td>
-                    <td><button type="button" class="btn btn-primary mx-1 text-white" data-toggle="modal" data-target="#modalEditar" data-nome="<?=$listgeral['nome']; ?>" data-foto="<?=$listgeral['foto']; ?>" data-descricao="<?=$listgeral['descricao']; ?>" data-categoria="<?=$listgeral['nomecategoria']; ?>" data-estoque="<?=$listgeral['estoque']; ?>" data-preco="<?=$listgeral['preco']; ?>" data-id="<?=$listgeral['id']; ?>">Editar Produto </button>  <br><br> <a class="btn btn-danger" href="./actions/excluir_produto.php?id=<?=$listgeral['id']; ?>">Excluir Produto</td>
+                    <td><button type="button" class="btn btn-primary mx-1 text-white" data-toggle="modal" data-target="#modalEditar" data-nome="<?=$listgeral['nome']; ?>" data-foto="<?=$listgeral['foto']; ?>" data-descricao="<?=$listgeral['descricao']; ?>" data-categoria="<?=$listgeral['nomecategoria']; ?>" data-estoque="<?=$listgeral['estoque']; ?>" data-preco="<?=$listgeral['preco']; ?>" data-id="<?=$listgeral['id']; ?>">Editar Produto </button>  <br><br> <a class="btn btn-danger text-white" onclick="confirmaExcluir(<?=$listgeral['id']; ?>)">Excluir Produto</td>
                     <!-- <i class="bi bi-plus-circle"></i> -->
                 </tr>
                 <?php } ?>
@@ -262,6 +262,27 @@ require_once('./actions/classes/Produto.class.php');
             modal.find('.precoProduto').val(preco)
             modal.find('.idProduto').val(id)
         })
+    </script>
+    <!-- Importar o SweetAlert -->
+    <?php include_once('includes/alertas.include.php');  ?>
+
+    <script>
+        function confirmaExcluir(id) {
+            Swal.fire({
+                title: "Tem certeza que deseja remover este produto?",
+                text: "Você não pode reverter isto!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sim, delete isto!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Redirecionar para excluir.php
+                    window.location.href = './actions/excluir_produto.php?id='+id;
+                }
+            });
+        }
     </script>
 </body>
 
